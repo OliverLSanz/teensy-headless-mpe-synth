@@ -31,6 +31,7 @@ class Synth{
     void noteOn(byte channel, byte note, byte velocity);
     void noteOff(byte channel, byte note, byte velocity);
     void controlChange(byte channel, byte control, byte value);
+    void pitchChange(byte channel, int pitch);
     Voice **getVoices();
     AudioMixer4 * getOutput();
 
@@ -112,8 +113,21 @@ inline AudioMixer4 * Synth::getOutput(){
 /**
  * Control Change
  */
-void Synth::controlChange(byte channel, byte control, byte ccValue){
+void Synth::controlChange(byte channel, byte control, byte value){
+  for (int i = 0; i < voiceCount ; i++) {
+    if(this->voices[i]->channel == channel && this->voices[i]->isActive()){
+      this->voices[i]->controlChange(channel, control, value);
+    }
+  }
+}
 
+
+void Synth::pitchChange(byte channel, int pitch){
+  for (int i = 0; i < voiceCount ; i++) {
+    if(this->voices[i]->channel == channel && this->voices[i]->isActive()){
+      this->voices[i]->pitchChange(channel, pitch);
+    }
+  }
 }
 
 inline Voice** Synth::getVoices(){

@@ -19,11 +19,14 @@ class Voice{
     Voice();
 
     byte currentNote;
+    byte channel;  // for MPE
     unsigned long last_played;
     
     AudioMixer4 * getOutput();
     void noteOn(byte channel, byte note, byte velocity);
     void noteOff(byte channel, byte note, byte velocity);
+    void controlChange(byte channel, byte control, byte value);
+    void pitchChange(byte channel, int pitch);
     bool isActive();
 };
 
@@ -61,6 +64,7 @@ inline void Voice::noteOn(byte channel, byte note, byte velocity) {
   this->last_played = millis();
   this->notePlayed=true;
   this->currentNote = note;
+  this->channel = channel;
 }
 
 /**
@@ -69,6 +73,21 @@ inline void Voice::noteOn(byte channel, byte note, byte velocity) {
 inline void Voice::noteOff(byte channel, byte note, byte velocity) {
   this->waveGenerator->amplitude(0);
   this->notePlayed=false;
+}
+
+/**
+ * Control change
+ */
+inline void Voice::controlChange(byte channel, byte control, byte value) {
+}
+
+/**
+ * Pitch change
+ */
+inline void Voice::pitchChange(byte channel, int pitch){
+  float offset = float(pitch) / 342;  // 342 corresponding to pitch range 24
+  float freq = 440.0 * powf(2.0, (float(this->currentNote) - 69 + offset) * 0.08333333);
+  this->waveGenerator->frequency(freq);
 }
 
 /**
