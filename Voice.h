@@ -27,6 +27,7 @@ class Voice{
     void noteOff(byte channel, byte note, byte velocity);
     void controlChange(byte channel, byte control, byte value);
     void pitchChange(byte channel, int pitch);
+    void afterTouch(byte channel, byte pressure);
     bool isActive();
 };
 
@@ -88,6 +89,13 @@ inline void Voice::pitchChange(byte channel, int pitch){
   float offset = float(pitch) / 342;  // 342 corresponding to pitch range 24
   float freq = 440.0 * powf(2.0, (float(this->currentNote) - 69 + offset) * 0.08333333);
   this->waveGenerator->frequency(freq);
+}
+
+/**
+ * Pitch change
+ */
+inline void Voice::afterTouch(byte channel, byte pressure){
+  this->waveGenerator->amplitude(float(map(pressure, 0, 127, 0, 100))/100);
 }
 
 /**

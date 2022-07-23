@@ -23,6 +23,7 @@ void setup() {
   usbMIDI.setHandleNoteOff(onNoteOff);
   usbMIDI.setHandleControlChange(onMidiControlChange);
   usbMIDI.setHandlePitchChange(onPitchChange);
+  usbMIDI.setHandleAfterTouch(onAfterTouch);
 
   // Starting sequence
   digitalWrite(LED_BUILTIN, HIGH);
@@ -51,4 +52,8 @@ void onMidiControlChange(byte channel, byte control, byte value){
 
 void onPitchChange(byte channel, int pitch){
   synth->pitchChange(channel, pitch);
+}
+
+void onAfterTouch(byte channel, byte pressure){
+  synth->afterTouch(channel, pressure);
 }

@@ -32,6 +32,7 @@ class Synth{
     void noteOff(byte channel, byte note, byte velocity);
     void controlChange(byte channel, byte control, byte value);
     void pitchChange(byte channel, int pitch);
+    void afterTouch(byte channel, byte pressure);
     Voice **getVoices();
     AudioMixer4 * getOutput();
 
@@ -126,6 +127,14 @@ void Synth::pitchChange(byte channel, int pitch){
   for (int i = 0; i < voiceCount ; i++) {
     if(this->voices[i]->channel == channel && this->voices[i]->isActive()){
       this->voices[i]->pitchChange(channel, pitch);
+    }
+  }
+}
+
+void Synth::afterTouch(byte channel, byte pressure){
+  for (int i = 0; i < voiceCount ; i++) {
+    if(this->voices[i]->channel == channel && this->voices[i]->isActive()){
+      this->voices[i]->afterTouch(channel, pressure);
     }
   }
 }
