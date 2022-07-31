@@ -1,5 +1,10 @@
 #include <Audio.h>
 #include "Synth.h"
+#include "USBHost_t36.h"
+
+// Set up USB host midi interface
+USBHost myUSBHost;
+MIDIDevice slaveMidiDevice(myUSBHost);
 
 Synth *synth = new Synth();
 
@@ -11,6 +16,13 @@ AudioControlSGTL5000     sgtl5000_1;
 
 void setup() {
   Serial.begin(9600);
+
+  myUSBHost.begin();
+	slaveMidiDevice.setHandleNoteOff(onNoteOff);
+	slaveMidiDevice.setHandleNoteOn(onNoteOn);
+	slaveMidiDevice.setHandleControlChange(onMidiControlChange);
+  slaveMidiDevice.setHandlePitchChange(onPitchChange);
+  slaveMidiDevice.setHandleAfterTouchChannel(onAfterTouch);
 
   pinMode(LED_BUILTIN, OUTPUT);
 
@@ -33,6 +45,8 @@ void setup() {
 }
 
 void loop() {
+    myUSBHost.Task();
+	  slaveMidiDevice.read();
     usbMIDI.read();
 }
 
