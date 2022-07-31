@@ -36,11 +36,11 @@ class Voice{
  */
 inline Voice::Voice(){
   this->waveGenerator = new AudioSynthWaveform();
-  this->waveGenerator->begin(WAVEFORM_SAWTOOTH);
+  this->waveGenerator->begin(WAVEFORM_SAWTOOTH_REVERSE);
   this->waveGenerator->amplitude(1);
 
   this->output = new AudioMixer4();
-  this->output->gain(0, 1);
+  this->output->gain(0, 0.6);
 
   this->patchCord1 = new AudioConnection(*this->waveGenerator, 0, *this->output, 0);
   this->patchCord2 = new AudioConnection(*this->waveGenerator, 0, *this->output, 1);
