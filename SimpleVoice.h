@@ -1,12 +1,13 @@
-#ifndef Voice_h
-#define Voice_h
+#ifndef _SimpleVoice
+#define _SimpleVoice
 
 #include <Audio.h>
+#include "interfaces/Voice.h"
 
 /*
- * Voice
+ * SimpleVoice
  */
-class Voice{
+class SimpleVoice: public Voice {
   private:
     AudioSynthWaveform       *waveGenerator;
     AudioMixer4              *output;
@@ -16,12 +17,12 @@ class Voice{
     bool notePlayed;
 
   public:
-    Voice();
+    SimpleVoice();
 
     byte currentNote;
     byte channel;  // for MPE
     unsigned long last_played;
-    
+
     AudioMixer4 * getOutput();
     void noteOn(byte channel, byte note, byte velocity);
     void noteOff(byte channel, byte note, byte velocity);
@@ -34,7 +35,7 @@ class Voice{
 /**
  * Constructor
  */
-inline Voice::Voice(){
+inline SimpleVoice::SimpleVoice(){
   this->waveGenerator = new AudioSynthWaveform();
   this->waveGenerator->begin(WAVEFORM_SAWTOOTH_REVERSE);
   this->waveGenerator->amplitude(1);
@@ -51,14 +52,14 @@ inline Voice::Voice(){
 /**
  * Return the audio output
  */
-inline AudioMixer4 * Voice::getOutput(){
+inline AudioMixer4 * SimpleVoice::getOutput(){
   return this->output;
 }
 
 /**
  * Note on
  */
-inline void Voice::noteOn(byte channel, byte note, byte velocity) {
+inline void SimpleVoice::noteOn(byte channel, byte note, byte velocity) {
   float freq = 440.0 * powf(2.0, (float)(note - 69) * 0.08333333);
   this->waveGenerator->frequency(freq);
   this->waveGenerator->amplitude(float(map(velocity, 0, 127, 0, 100))/100);
@@ -71,7 +72,7 @@ inline void Voice::noteOn(byte channel, byte note, byte velocity) {
 /**
  * Note off
  */
-inline void Voice::noteOff(byte channel, byte note, byte velocity) {
+inline void SimpleVoice::noteOff(byte channel, byte note, byte velocity) {
   this->waveGenerator->amplitude(0);
   this->notePlayed=false;
 }
@@ -79,13 +80,13 @@ inline void Voice::noteOff(byte channel, byte note, byte velocity) {
 /**
  * Control change
  */
-inline void Voice::controlChange(byte channel, byte control, byte value) {
+inline void SimpleVoice::controlChange(byte channel, byte control, byte value) {
 }
 
 /**
  * Pitch change
  */
-inline void Voice::pitchChange(byte channel, int pitch){
+inline void SimpleVoice::pitchChange(byte channel, int pitch){
   float offset = float(pitch) / 342;  // 342 corresponding to pitch range 24
   float freq = 440.0 * powf(2.0, (float(this->currentNote) - 69 + offset) * 0.08333333);
   this->waveGenerator->frequency(freq);
@@ -94,14 +95,14 @@ inline void Voice::pitchChange(byte channel, int pitch){
 /**
  * Pitch change
  */
-inline void Voice::afterTouch(byte channel, byte pressure){
+inline void SimpleVoice::afterTouch(byte channel, byte pressure){
   this->waveGenerator->amplitude(float(map(pressure, 0, 127, 0, 100))/100);
 }
 
 /**
  * Is the voice active
  */
-inline bool Voice::isActive(){
+inline bool SimpleVoice::isActive(){
   return this->notePlayed;
 }
 

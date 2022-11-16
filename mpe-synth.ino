@@ -1,19 +1,28 @@
 #include <Audio.h>
-#include "Synth.h"
 #include "USBHost_t36.h"
+
+#include "MPESynth.h"
+#include "SimpleVoice.h"
+// #include "Synth.h"
 
 // Set up USB host midi interface
 USBHost myUSBHost;
 MIDIDevice slaveMidiDevice(myUSBHost);
 
-Synth *synth = new Synth();
+const byte voiceCount = 4;
+SimpleVoice *voices = new SimpleVoice[voiceCount];
+MPESynth *synth = new MPESynth(voices, voiceCount);
 
-AudioOutputI2S           i2s1;           
+// AudioMixer4 outss = *synth->getOutput();
+
+AudioOutputI2S           i2s1;
 AudioConnection          patchCord1(*synth->getOutput(), 0, i2s1, 0);
 AudioConnection          patchCord2(*synth->getOutput(), 0, i2s1, 1);
 
 AudioControlSGTL5000     sgtl5000_1;
 
+// void setup() {};
+// void loop() {};
 void setup() {
   Serial.begin(9600);
 
