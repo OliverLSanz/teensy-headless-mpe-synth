@@ -1,3 +1,10 @@
+[Demo](https://github.com/OliverLSanz/teensy-headless-mpe-synth/edit/master/README.md#prototype-demo)
+ / [Features](https://github.com/OliverLSanz/teensy-headless-mpe-synth/edit/master/README.md#features)
+ / [LinnStrument settings](https://github.com/OliverLSanz/teensy-headless-mpe-synth/edit/master/README.md#linnstrument-recommended-settings)
+ / [Hardware](https://github.com/OliverLSanz/teensy-headless-mpe-synth/edit/master/README.md#hardware)
+ / [Software](https://github.com/OliverLSanz/teensy-headless-mpe-synth/edit/master/README.md#software)
+ / [State of the project](https://github.com/OliverLSanz/teensy-headless-mpe-synth/edit/master/README.md#state-of-the-project)
+
 # Teensy Headless MPE Synth
 This is a sound synthesizer for the [Teensy microcontroller](https://www.pjrc.com/teensy/).
 
