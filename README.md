@@ -2,8 +2,7 @@
 This is a sound synthesizer for the [Teensy microcontroller](https://www.pjrc.com/teensy/).
 
 The goal of this project is to build a small and portable MPE synth as a companion
-for the [LinnStrument](https://www.rogerlinndesign.com/linnstrument) MIDI controller. This fulfils my need of being able to jump in a short practising session in the couch or in the park,
-without carrying my computer with me.
+for the [LinnStrument](https://www.rogerlinndesign.com/linnstrument) MIDI controller. This fulfils my need of being able to jump in a short practising session while comfortably reclining in the couch or breathing fresh air in the park, leaving my computer with at home.
 
 ## Prototype demo!
 This prototype is built with development convenience in mind. The components could easily fit in 1/3 the volume for maximum portability.
@@ -64,9 +63,9 @@ This can be done using the Arduino IDE after installing some Teensy plug ins. Th
 
 # Software
 The project is divided into 3 files:
-- `mpe-synth.ino`: Arduino sketch file, defining the `loop` and `setup` functions. Here the synth is configured and the incoming MIDI messages are passed to the actual synth.
-- `Synth.h`: contains the synth code, that handles MIDI messages and forwards them to the corresponding voice.
-- `Voice.h`: Here is the code for the voices
+- `mpe-synth.ino`: Arduino sketch file, defining the `loop` and `setup` functions. Here the synth is configured and the incoming MIDI messages are passed to the actual synth. If you want to modify the info sent to the synth, edit here.
+- `Synth.h`: contains the synth code, that handles MIDI messages and forwards them to the corresponding voice. If you want to change the behavior of the synth, edit here.
+- `Voice.h`: Here is the code that produces sound for each of the voices. For now, just a simple waveform. If you want to change how the synth sounds, edit here.
 
 # State of the project
 
@@ -82,3 +81,5 @@ Not yet implemented and they probably won't be:
 
 # Thanks
 Thank to ghostintranslation for its [SimpleSynth](https://github.com/ghostintranslation/SimpleSynth) code which has greatly inspired this!
+
+And of course thanks to Roger Linn for designing this amazing interface :-)
