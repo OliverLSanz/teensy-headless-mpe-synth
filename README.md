@@ -5,6 +5,25 @@ The goal of this project is to build a small and portable MPE synth as a compani
 for the [LinnStrument](https://www.rogerlinndesign.com/linnstrument) MIDI controller. This fulfils my need of being able to jump in a short practising session in the couch or in the park,
 without carrying my computer with me.
 
+## Prototype demo!
+This prototype is built with development convenience in mind. The components could easily fit in 1/3 the volume for maximum portability.
+
+Synth in wooden box!
+
+<img src="https://user-images.githubusercontent.com/15345234/202673000-d4c6898d-8394-442b-b7b8-877eb3dc9f1f.jpeg" width="300" />
+<img src="https://user-images.githubusercontent.com/15345234/202673004-a9377808-c1d2-4e1f-88bc-9e5d4c7590b9.jpeg" width="300" />
+<img src="https://user-images.githubusercontent.com/15345234/202673039-6efc1301-1a9b-45c9-ba45-263457ce5d23.jpeg" width="300" />
+Full LinnStrument setup powered by power bank:
+
+<img src="https://user-images.githubusercontent.com/15345234/202673415-b3fc2b53-796a-4d89-87e6-f39cc2d4f727.jpeg" width="300" />
+
+
+### Demo song (turn up video player volume)
+https://user-images.githubusercontent.com/15345234/202672777-879ea173-8e16-452c-9b17-6823afa3fe5b.mp4
+
+### Slide and loudnes
+https://user-images.githubusercontent.com/15345234/202672802-54e3bbb5-0b7d-4149-a507-6c5db28aa252.mp4
+
 ## Features
 - It implements the [MIDI Polyohonic Expression Specification](https://www.midi.org/midi-articles/midi-polyphonic-expression-mpe) (MPE for short).
 - The synth is headless, meaning that there is no physical source of input like
@@ -43,6 +62,12 @@ No schematics needed! Just
 ## Loading the software
 This can be done using the Arduino IDE after installing some Teensy plug ins. There are plenty of tutorials out there.
 
+# Software
+The project is divided into 3 files:
+- `mpe-synth.ino`: Arduino sketch file, defining the `loop` and `setup` functions. Here the synth is configured and the incoming MIDI messages are passed to the actual synth.
+- `Synth.h`: contains the synth code, that handles MIDI messages and forwards them to the corresponding voice.
+- `Voice.h`: Here is the code for the voices
+
 # State of the project
 
 This is not finished, but it is in a working state that fulfills my needs. I don't feel like continuing development since I have higher priority projects right now.
@@ -54,3 +79,6 @@ Not yet implemented and they probably won't be:
 - Control Synth parameters via CC messages.
 - Implement some sort of sound generation better than a simple waveform per voice like it is right now.
 - Make sound respond to the Timbre/Y dimension.
+
+# Thanks
+Thank to ghostintranslation for its [SimpleSynth](https://github.com/ghostintranslation/SimpleSynth) code which has greatly inspired this!
